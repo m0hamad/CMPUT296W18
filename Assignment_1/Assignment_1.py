@@ -70,29 +70,53 @@ def parse_url(url):
     scheme = url[0:scheme_ends]
     
     url2 = url[scheme_ends + 3:]
+    print(url2)
+    print("url2 printed")
     
     # Since the port will be the only item after the schema in the URL to have a ":" symbol, if it
     # does exist, then I find the port and add it to the tuple, otherwise port is equal to None.
     # Either way, we end up adding the host first.
-    if ":" in url2:
+    if ":" in url2 and "/" in url2[url2.index(":"):url2.index(":") + 6]:
         host_ends2 = url2.index(":")
         host = url2[0:host_ends2]
         
         url3 = url2[host_ends2 + 1:]
+        print(url3)
+        print("url3 printed")
         port_ends = url3.index("/")
         port = url3[0:port_ends]
         url4 = url3[port_ends + 1:]
+        print(url4)
+        print("url4 (:) printed")
         
     else:
         port = None
         host_ends = url2.index("/")
         host = url2[0:host_ends]
         url4 = url2[host_ends + 1:]
+        print(url4)
+        print("url4 (/)printed")
         
+    # Finding out if there is a query section, fragment section or just paths left.
     if "?" in url4:
         path_ends = url4.index("?")
         paths = url4[0:path_ends]
         paths = paths.split("/")
+        url5 = url4[path_ends + 1:]
+        print(url5)
+        print("printed URL 5 #1")
+    elif "#" in url4:
+        path_ends = url4.index("#")
+        paths = url4[0:path_ends]
+        paths = paths.split("/")
+        url5 = url4[path_ends + 1:]
+        print(url5)
+        print("printed URL 5 #2")        
+    elif "/" in url4:
+        paths = url4[0:]
+        paths = paths.split("/")
+    else:
+        paths = None
         
     end_tuple = (
         scheme,
@@ -102,11 +126,13 @@ def parse_url(url):
         None,
         None
     )
+    
+    # Add to a new tuple if the value is None.
     edited_tuple = ()
     for element in end_tuple:
-        if element != None:
+        if element != None and element != '':
             edited_tuple += (element,)
     return edited_tuple
 
-url = 'https://localhost/cats%26scute/index%26shtml?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics%26s'
+url = 'http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics'
 print(parse_url(url))
