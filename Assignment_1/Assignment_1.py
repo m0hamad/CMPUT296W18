@@ -145,27 +145,49 @@ def parse_url(url):
         paths = None
         url5 = None
         
+    # Check if query exists and then organizing the query into key:value pairs in a dictionary.
+    # The value will be a list of values.
+    # Shoutout to Josh (instructor) for helping me with the dictionary part :D
     if url5 != None and "#" in url5:
         query_ends = url5.index("#")
         query = url5[0:query_ends]
         query = equal_split(query)
-        print("~~~~~~~~~~")
+        print("+++++++++++++")
         print(query)
-        print("~~~~~~~~~~")        
+        print("+++++++++++++")    
+        print(" ")
         query_dict = {}
         
         for i in range(len(query)):
             for j in range(len(query[i]) - 1):
                 if query[i][j] in query_dict:
-                    query_dict[query[i][j]].append[query[i][j+1]]
-                query_dict[query[i][j]] = [query[i][j+1]]
+                    query_dict[query[i][j]].append(query[i][j+1])
+                else:
+                    query_dict[query[i][j]] = [query[i][j+1]]
         print("~~~~~~~~~~")
         print(query_dict)
         print("~~~~~~~~~~")
-        print(query_dict)
-    else:
+        print(" ")
+    elif url5 == None or url5 == " ":
         query_dict = None
-            
+    else:
+        query = url5
+        query = equal_split(query)
+        print("^^^^^^^^^^^^^^^^")
+        print(query)
+        print("^^^^^^^^^^^^^^^^")    
+        print(" ")
+        query_dict = {}
+        for i in range(len(query)):
+            for j in range(len(query[i]) - 1):
+                if query[i][j] in query_dict:
+                    query_dict[query[i][j]].append(query[i][j+1])
+                else:
+                    query_dict[query[i][j]] = [query[i][j+1]]
+        print("######################")
+        print(query_dict)
+        print("######################")
+        print(" ")
         
     end_tuple = (
         scheme,
@@ -183,5 +205,6 @@ def parse_url(url):
             edited_tuple += (element,)
     return edited_tuple
 
-url = 'https://en.wikipedia.org/w/index.php?title=John_C._Fr%C3%A9mont&oldid=821454813#Early_life,_education,_and_career'
+url = 'http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics'
 print(parse_url(url))
+print(" ")
