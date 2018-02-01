@@ -16,26 +16,26 @@
 # For example, if the provided URL is 
 # http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics
 # then your function should return the following Pythong data structure:
-(
-    'http',
-    'localhost',
-    8080,
-    [
-        'cats',
-        'cute',
-        'index.html',
-        ],
-    {
-        'tag': [
-            'fuzzy',
-            'little pawsies',
-            ],
-        'show': [
-            'data&statistics',
-            ],
-        },
-    'Statistics'
-    )
+#(
+#    'http',
+#    'localhost',
+#    8080,
+#    [
+#        'cats',
+#        'cute',
+#        'index.html',
+#        ],
+#    {
+#        'tag': [
+#            'fuzzy',
+#            'little pawsies',
+#            ],
+#        'show': [
+#            'data&statistics',
+#            ],
+#        },
+#    'Statistics'
+#    )
 
 # Your function must be named parse_url. I've given you some starter code
 # below. There is an accompanying file with this assignment called
@@ -61,16 +61,52 @@
 # Submission instructions: Upload your version of
 # this file to eClass under Assignment 1.
 
+# http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics
+
 # Here is some code to get you started:
 
 def parse_url(url):
-    scheme_ends = url.index(":")
+    scheme_ends = url.index("://")
     scheme = url[0:scheme_ends]
+    
+    url2 = url[scheme_ends + 3:]
+    #host_ends = url2.index("/")
+    #host_ends2 = url2.index(":")
+    
+    if ":" in url2:
+        host_ends2 = url2.index(":")
+        host = url2[0:host_ends2]
+        
+        url3 = url2[host_ends2 + 1:]
+        port_ends = url3.index("/")
+        port = url3[0:port_ends]
+        
+    else:
+        port = None
+        host_ends = url2.index("/")
+        host = url2[0:host_ends]
+    
+    # This if/else conditional checks if there is a port or not.
+    # If not, our statements nested in the if statement allow us
+    # to add the port to the tuple.
+    #if host_ends2 < host_ends:
+     #   host = url2[0:host_ends2]
+        
+      #  url3 = url2[host_ends2 + 1:]
+       # port_ends = url3.index("/")
+        #port = url3[0:port_ends]
+        
+    #else:
+     #   host = url2[0:host_ends]
+        
     return (
         scheme,
-        None,
-        None,
+        host,
+        port,
         None,
         None,
         None
     )
+
+url = "http://google.ca:8080/"#cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics"
+print(parse_url(url))
