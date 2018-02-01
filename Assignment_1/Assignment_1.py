@@ -1,7 +1,7 @@
 # Weclome to Assignment #1!
 
-# Your name:
-# The date:
+# Your name: Mohamad Jamaleddine
+# The [due] date: February 2nd, 2018
 # The names of any students you consulted with:
 
 # Paste the license you choose for your assignment here.
@@ -102,7 +102,11 @@ def parse_url(url):
         None,
         None
     )
-    return end_tuple
+    edited_tuple = ()
+    for element in end_tuple:
+        if element != None:
+            edited_tuple += (element,)
+    return edited_tuple
 
-url = 'http://localhost:8080/cats%26scute/index%26shtml?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics%26s'
+url = 'https://localhost/cats%26scute/index%26shtml?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics%26s'
 print(parse_url(url))
