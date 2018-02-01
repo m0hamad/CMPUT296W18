@@ -16,26 +16,26 @@
 # For example, if the provided URL is 
 # http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics
 # then your function should return the following Pythong data structure:
-#(
-#    'http',
-#    'localhost',
-#    8080,
-#    [
-#        'cats',
-#        'cute',
-#        'index.html',
-#        ],
-#    {
-#        'tag': [
-#            'fuzzy',
-#            'little pawsies',
-#            ],
-#        'show': [
-#            'data&statistics',
-#            ],
-#        },
-#    'Statistics'
-#    )
+(
+    'http',
+    'localhost',
+    8080,
+    [
+        'cats',
+        'cute',
+        'index.html',
+        ],
+    {
+        'tag': [
+            'fuzzy',
+            'little pawsies',
+            ],
+        'show': [
+            'data&statistics',
+            ],
+        },
+    'Statistics'
+    )
 
 # Your function must be named parse_url. I've given you some starter code
 # below. There is an accompanying file with this assignment called
@@ -65,7 +65,27 @@
 
 # Here is some code to get you started:
 
+# Splits the queries into "=" parts
+def equal_split(query):
+    i = 0
+    query = query.split("&")    
+    while i < len(query):
+        query[i] = query[i].split("=") 
+        i += 1
+    print(query) # Test print
+    return query
+
+# Removes plus sign from URL
+def remove_plus(url):
+    for i in range(len(url)):
+        if "+" in url:
+            url = url.split("+")
+            url = " ".join(url)
+    return url
+
 def parse_url(url):
+    
+    url = remove_plus(url)
     scheme_ends = url.index("://")
     scheme = url[0:scheme_ends]
     
@@ -120,28 +140,39 @@ def parse_url(url):
     elif "/" in url4:
         paths = url4[0:]
         paths = paths.split("/")
+        url5 = None
     else:
         paths = None
+        url5 = None
         
-    if "#" in url5:
+    if url5 != None and "#" in url5:
         query_ends = url5.index("#")
         query = url5[0:query_ends]
-        query = query.split("&")
+        query = equal_split(query)
+        print("~~~~~~~~~~")
+        print(query)
+        print("~~~~~~~~~~")        
+        query_dict = {}
         
-        q = 0
-        while q < len(query):
-            query[q] = query[q].split("=") 
-            q += 1
-        print(query) # Test print
-        
-        
+        for i in range(len(query)):
+            for j in range(len(query[i]) - 1):
+                if query[i][j] in query_dict:
+                    query_dict[query[i][j]].append[query[i][j+1]]
+                query_dict[query[i][j]] = [query[i][j+1]]
+        print("~~~~~~~~~~")
+        print(query_dict)
+        print("~~~~~~~~~~")
+        print(query_dict)
+    else:
+        query_dict = None
+            
         
     end_tuple = (
         scheme,
         host,
         port,
         paths,
-        None,
+        query_dict,
         None
     )
     
@@ -152,5 +183,5 @@ def parse_url(url):
             edited_tuple += (element,)
     return edited_tuple
 
-url = 'http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics'
+url = 'https://en.wikipedia.org/w/index.php?title=John_C._Fr%C3%A9mont&oldid=821454813#Early_life,_education,_and_career'
 print(parse_url(url))
