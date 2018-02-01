@@ -123,6 +123,19 @@ def parse_url(url):
     else:
         paths = None
         
+    if "#" in url5:
+        query_ends = url5.index("#")
+        query = url5[0:query_ends]
+        query = query.split("&")
+        
+        q = 0
+        while q < len(query):
+            query[q] = query[q].split("=") 
+            q += 1
+        print(query) # Test print
+        
+        
+        
     end_tuple = (
         scheme,
         host,
