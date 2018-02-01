@@ -70,9 +70,10 @@ def parse_url(url):
     scheme = url[0:scheme_ends]
     
     url2 = url[scheme_ends + 3:]
-    #host_ends = url2.index("/")
-    #host_ends2 = url2.index(":")
     
+    # Since the port will be the only item after the schema in the URL to have a ":" symbol, if it
+    # does exist, then I find the port and add it to the tuple, otherwise port is equal to None.
+    # Either way, we end up adding the host first.
     if ":" in url2:
         host_ends2 = url2.index(":")
         host = url2[0:host_ends2]
@@ -80,33 +81,28 @@ def parse_url(url):
         url3 = url2[host_ends2 + 1:]
         port_ends = url3.index("/")
         port = url3[0:port_ends]
+        url4 = url3[port_ends + 1:]
         
     else:
         port = None
         host_ends = url2.index("/")
         host = url2[0:host_ends]
-    
-    # This if/else conditional checks if there is a port or not.
-    # If not, our statements nested in the if statement allow us
-    # to add the port to the tuple.
-    #if host_ends2 < host_ends:
-     #   host = url2[0:host_ends2]
+        url4 = url2[host_ends + 1:]
         
-      #  url3 = url2[host_ends2 + 1:]
-       # port_ends = url3.index("/")
-        #port = url3[0:port_ends]
+    if "?" in url4:
+        path_ends = url4.index("?")
+        paths = url4[0:path_ends]
+        paths = paths.split("/")
         
-    #else:
-     #   host = url2[0:host_ends]
-        
-    return (
+    end_tuple = (
         scheme,
         host,
         port,
-        None,
+        paths,
         None,
         None
     )
+    return end_tuple
 
-url = "http://google.ca:8080/"#cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics"
+url = 'http://localhost:8080/cats%26scute/index%26shtml?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics%26s'
 print(parse_url(url))
