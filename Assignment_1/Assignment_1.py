@@ -70,8 +70,8 @@ def parse_url(url):
     scheme = url[0:scheme_ends]
     
     url2 = url[scheme_ends + 3:]
-    print(url2)
-    print("url2 printed")
+    print(url2) # Test Printing
+    print("url2 printed") # Test Printing
     
     # Since the port will be the only item after the schema in the URL to have a ":" symbol, if it
     # does exist, then I find the port and add it to the tuple, otherwise port is equal to None.
@@ -86,32 +86,37 @@ def parse_url(url):
         port_ends = url3.index("/")
         port = url3[0:port_ends]
         url4 = url3[port_ends + 1:]
-        print(url4)
-        print("url4 (:) printed")
+        print(url4) # Test Printing
+        print("url4 (:) printed") # Test Printing
         
     else:
         port = None
         host_ends = url2.index("/")
         host = url2[0:host_ends]
         url4 = url2[host_ends + 1:]
-        print(url4)
-        print("url4 (/)printed")
+        print(url4) # Test Printing
+        print("url4 (/)printed") # Test Printing
         
-    # Finding out if there is a query section, fragment section or just paths left.
+    # The whole if/elif/elif/else block out if there is a query section, fragment section or just 
+    # paths left.
+    
+    # We check if query is next, we add path(s) to list, then we move on to query.
     if "?" in url4:
         path_ends = url4.index("?")
         paths = url4[0:path_ends]
         paths = paths.split("/")
         url5 = url4[path_ends + 1:]
-        print(url5)
-        print("printed URL 5 #1")
+        print(url5) # Test Printing
+        print("printed URL 5 #1") # Test Printing
+    # No query, just fragment, we add paths to list then we move on to deal with fragments
     elif "#" in url4:
         path_ends = url4.index("#")
         paths = url4[0:path_ends]
         paths = paths.split("/")
         url5 = url4[path_ends + 1:]
-        print(url5)
-        print("printed URL 5 #2")        
+        print(url5) # Test Printing
+        print("printed URL 5 #2") # Test Printing
+    # No query or Fragment, we deal with just paths.    
     elif "/" in url4:
         paths = url4[0:]
         paths = paths.split("/")
