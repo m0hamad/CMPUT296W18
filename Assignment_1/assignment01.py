@@ -91,7 +91,6 @@ def equal_split(query):
     while i < len(query):
         query[i] = query[i].split("=") 
         i += 1
-    print(query) # Test print
     return query
 
 # Removes plus sign from URL
@@ -123,8 +122,6 @@ def percent_decode(url):
         decoded = bytearray.fromhex(to_decode).decode('cp1252')
         url[percent].replace("%", "")
         url = url[0:percent] + decoded + url[percent+3:]
-        print(url)
-        print("")
     return url
 
 # For this function, I basically used what you had for parsing the schema, and sort of implemented
@@ -138,8 +135,6 @@ def parse_url(url):
     scheme = url[0:scheme_ends]
     
     url2 = url[scheme_ends + 3:]
-    print(url2) # Test Printing
-    print("url2 printed") # Test Printing
     
     # Since the port will be the only item after the schema in the URL to have a ":" symbol, if it
     # does exist, then I find the port and add it to the tuple, otherwise port is equal to None.
@@ -149,21 +144,15 @@ def parse_url(url):
         host = url2[0:host_ends2]
         
         url3 = url2[host_ends2 + 1:]
-        print(url3)
-        print("url3 printed")
         port_ends = url3.index("/")
         port = url3[0:port_ends]
         url4 = url3[port_ends + 1:]
-        print(url4) # Test Printing
-        print("url4 (:) printed") # Test Printing
         
     else:
         port = None
         host_ends = url2.index("/")
         host = url2[0:host_ends]
         url4 = url2[host_ends + 1:]
-        print(url4) # Test Printing
-        print("url4 (/)printed") # Test Printing
         
     # The whole if/elif/elif/else block out if there is a query section, fragment section or just 
     # paths left.
@@ -174,23 +163,19 @@ def parse_url(url):
         paths = url4[0:path_ends]
         paths = paths.split("/")
         url5 = url4[path_ends + 1:]
-        print(url5) # Test Printing
-        print("printed URL 5 #1") # Test Printing
     # No query, just fragment, we add paths to list then we move on to deal with fragments
     elif "#" in url4:
         path_ends = url4.index("#")
         paths = url4[0:path_ends]
         paths = paths.split("/")
         url5 = url4[path_ends + 1:]
-        print(url5) # Test Printing
-        print("printed URL 5 #2") # Test Printing
     # No query or Fragment, we deal with just paths.    
     elif "/" in url4:
         paths = url4[0:]
         paths = paths.split("/")
         url5 = None
     else:
-        paths = None
+        paths = ['']
         url5 = None
         
     # Check if query exists and then organizing the query into key:value pairs in a dictionary.
@@ -200,10 +185,6 @@ def parse_url(url):
         query_ends = url5.index("#")
         query = url5[0:query_ends]
         query = equal_split(query)
-        print("+++++++++++++")
-        print(query)
-        print("+++++++++++++")    
-        print(" ")
         query_dict = {}
         
         for i in range(len(query)):
@@ -212,25 +193,19 @@ def parse_url(url):
                     query_dict[query[i][j]].append(query[i][j+1])
                 else:
                     query_dict[query[i][j]] = [query[i][j+1]]
-        print("~~~~~~~~~~")
-        print(query_dict)
-        print("~~~~~~~~~~")
-        print(" ")
         
         fragment = url5[query_ends + 1:]
         
     elif url5 == None or url5 == " ":
-        query_dict = None
-        fragment = None
+        query_dict = {}
+        fragment = ''
     elif url4[path_ends] == "#":
         fragment = url5.split(",")
-        query_dict = None
+        query_dict = {}
     else:
         query = url5
         query = equal_split(query)
-        print("^^^^^^^^^^^^^^^^")
-        print(query)
-        print("^^^^^^^^^^^^^^^^")    
+        print(query)    
         print(" ")
         query_dict = {}
         for i in range(len(query)):
@@ -239,11 +214,7 @@ def parse_url(url):
                     query_dict[query[i][j]].append(query[i][j+1])
                 else:
                     query_dict[query[i][j]] = [query[i][j+1]]
-        print("######################")
-        print(query_dict)
-        print("######################")
-        print(" ")
-        fragment = None
+        fragment = ''
         
     end_tuple = (
         scheme,
@@ -254,13 +225,12 @@ def parse_url(url):
         fragment
     )
     
-    # Add to a new tuple if the value is None.
-    #edited_tuple = ()
-    #for element in end_tuple:
-        #if element != None and element != '':
-            #edited_tuple += (element,)
     return end_tuple
 
-url = 'https://en.wikipedia.org/w/index.php?title=John_C._Fr%C3%A9mont&oldid=821454813#Early_life,_education,_and_career'
-print(parse_url(url))
-print(" ")
+def main():
+
+    url = 'https://www.google.ca/'
+    print(parse_url(url))
+    print(" ")
+    
+main()
