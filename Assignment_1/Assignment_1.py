@@ -61,8 +61,6 @@
 # Submission instructions: Upload your version of
 # this file to eClass under Assignment 1.
 
-# http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics
-
 # Here is some code to get you started:
 
 # Splits the queries into "=" parts
@@ -168,7 +166,15 @@ def parse_url(url):
         print(query_dict)
         print("~~~~~~~~~~")
         print(" ")
+        
+        url6 = url5[query_ends + 1:]
+        fragment = url6.split(",")
+        
     elif url5 == None or url5 == " ":
+        query_dict = None
+        fragment = None
+    elif url4[path_ends] == "#":
+        fragment = url5.split(",")
         query_dict = None
     else:
         query = url5
@@ -188,6 +194,7 @@ def parse_url(url):
         print(query_dict)
         print("######################")
         print(" ")
+        fragment = None
         
     end_tuple = (
         scheme,
@@ -195,7 +202,7 @@ def parse_url(url):
         port,
         paths,
         query_dict,
-        None
+        fragment
     )
     
     # Add to a new tuple if the value is None.
@@ -205,6 +212,6 @@ def parse_url(url):
             edited_tuple += (element,)
     return edited_tuple
 
-url = 'http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics'
+url = 'https://www.sportsmole.co.uk/search/?s=barcelona&Search='
 print(parse_url(url))
 print(" ")
