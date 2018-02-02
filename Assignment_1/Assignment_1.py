@@ -87,7 +87,7 @@
 # Splits the queries into "=" parts
 def equal_split(query):
     i = 0
-    query = query.split("&")    
+    query = query.split("|")    
     while i < len(query):
         query[i] = query[i].split("=") 
         i += 1
@@ -102,9 +102,38 @@ def remove_plus(url):
             url = " ".join(url)
     return url
 
+# Remove '&' characters that are already there before I decode the URL, replace them wit '|' (not l)
+def remove_ampersand(url):
+    for i in range(len(url)):
+        if "&" in url:
+            url = url.split("&")
+            url = "|".join(url)
+    return url
+
+# https://stackoverflow.com/questions/12468179/unicodedecodeerror-utf8-codec-cant-decode-byte-0x9c
+# DATE ACCESSED: FEB 2nd, 2018
+# decoded = bytearray.fromhex(to_decode).decode('utf-8') was my initial line of code, but i used
+# .decode('cp1252') method instead and it solve my issue for John_C._FrÃ©mont'
+# This function percent decodes my URL
+def percent_decode(url):
+    while "%" in url:
+        percent = url.index("%")
+        to_decode = url[percent + 1: percent + 3]
+        print(to_decode)
+        decoded = bytearray.fromhex(to_decode).decode('cp1252')
+        url[percent].replace("%", "")
+        url = url[0:percent] + decoded + url[percent+3:]
+        print(url)
+        print("")
+    return url
+
+# For this function, I basically used what you had for parsing the schema, and sort of implemented
+# it throughout the entirety of the function.
 def parse_url(url):
     
     url = remove_plus(url)
+    url = remove_ampersand(url)
+    url = percent_decode(url)
     scheme_ends = url.index("://")
     scheme = url[0:scheme_ends]
     
@@ -188,8 +217,7 @@ def parse_url(url):
         print("~~~~~~~~~~")
         print(" ")
         
-        url6 = url5[query_ends + 1:]
-        fragment = url6.split(",")
+        fragment = url5[query_ends + 1:]
         
     elif url5 == None or url5 == " ":
         query_dict = None
@@ -227,12 +255,12 @@ def parse_url(url):
     )
     
     # Add to a new tuple if the value is None.
-    edited_tuple = ()
-    for element in end_tuple:
-        if element != None and element != '':
-            edited_tuple += (element,)
-    return edited_tuple
+    #edited_tuple = ()
+    #for element in end_tuple:
+        #if element != None and element != '':
+            #edited_tuple += (element,)
+    return end_tuple
 
-url = 'https://www.sportsmole.co.uk/search/?s=barcelona&Search='
+url = 'https://en.wikipedia.org/w/index.php?title=John_C._Fr%C3%A9mont&oldid=821454813#Early_life,_education,_and_career'
 print(parse_url(url))
 print(" ")
