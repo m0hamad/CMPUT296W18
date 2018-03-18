@@ -229,7 +229,7 @@ def parse_url(url):
 
 def main():
 
-    url = 'https://www.google.ca/'
+    url = 'http://localhost:8080/cats/cute/index.html?tag=fuzzy&tag=little+pawsies&show=data%26statistics#Statistics'
     print(parse_url(url))
     print(" ")
     

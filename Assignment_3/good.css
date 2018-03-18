@@ -1,0 +1,224 @@
+@charset "UTF-8";
+
+/*
+
+Source https://css-tricks.com/license/
+
+SUPER IMPORTANT LEGAL DOCUMENT
+------------------------------
+I don't give two hoots what you do with any of the design or code you find here.
+
+Actually, I do. I hope you take it and use it, uncredited, on a super commercial website and get wicked rich off it. I hope you use it at work and your boss is impressed and you get a big promotion. I hope it helps you design a website and that website impresses somebody you think is super hot and you get married and have smart, chill babies. I hope you use the code in a blog post you write elsewhere and that website gets way more popular and awesome than this one.
+
+If you feel like telling me about it, cool. If not, no big deal. If you feel better crediting it, that's cool. If not, don't sweat it.
+
+If you copy an entire article from this site and republish it on your own site like you wrote it, that's a little uncool. I won't be mad at you for stealing, I just think you're better than that and want to see you do better. I'm not going to come after you though. I'd rather play ball with my dog. The only time I'll be mad at you is if you go out of your way to try and hurt me somehow. And again I probably won't even be mad, just sad. Unless I'm having a bad day too, in which case I apologize in advance for my snarky replies.
+
+I want the web to get better and being all Johnny Protective over everything doesn't get us there. I understand other people feel differently about this and might have semi-legit reasons for protecting certain code, design, writing, or whatever. I work on some closed-source projects myself. CSS-Tricks isn't one of them. Go nuts.
+*/
+
+
+ /*
+ ** font-weight source: https://www.w3schools.com/cssref/pr_font_weight.asp
+ ** rgba source: https://www.w3schools.com/cssref/pr_font_weight.asp
+ ** other colour source: https://www.w3schools.com/colors/colors_picker.asp
+ ** cat wallpaper: https://images.pexels.com/photos/399647/pexels-photo-399647.jpeg?h=350&dpr=2&auto=compress&cs=tinysrgb
+ */
+p.bod {
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 32px;
+  color: black;
+  align-content: center;
+  width: 75%;
+  margin-left: 45px;
+  line-height: 1.5;
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 20px;
+  border-radius: 2px;
+}
+
+aside.side_bar {
+  width: 15%;
+  height: 100%;
+  right: 0;
+  margin-top: 70px;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.70);
+  padding-left: 15px;
+  padding-right: 35px;
+  position: fixed;
+}
+
+p#sidebar_text {
+  color: #99ffd6;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 32px;
+}
+
+h3 {
+  color: #99ffd6;
+  text-align: center;
+  font-family: sans-serif;
+  font-weight: 100;
+  font-size: 48px;
+  text-decoration: underline;
+}
+
+p#last_par {
+  margin-bottom: 65px;
+}
+
+.black_line {
+  background-color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 2px;
+  margin-left: 45px;
+  align-items: center;
+  width: 75%;
+  display: block;
+  height: 2px;
+  border: 0;
+  border-top: 2px;
+}
+
+.black_line#first_one {
+  background-color: black;
+  align-items: center;
+  display: block;
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 2px;
+  margin-left: 45px;
+  width: 75%;
+  margin-top: 87px;
+}
+
+/*
+** no underline source: /*
+** font-weight source: https://www.w3schools.com/cssref/pr_font_weight.asp
+** rgba source: https://www.w3schools.com/cssref/pr_font_weight.asp
+**
+*/
+a#home{
+  text-decoration: none;
+  border: 4px dotted #FFF;
+  padding-right: 8px;
+  padding-left: 8px;
+  color: white;
+}
+
+a#home:hover {
+  color: yellow;
+}
+
+/*
+** Changing font size for nested tag: https://stackoverflow.com/questions/41883489/nested-span-inside-a-p-tag-giving-different-font-size/41883589
+*/
+a.menu {
+  text-decoration: none;
+  font-size: 1rem;
+  margin-top: 15px;
+  right: 0;
+  color: silver;
+  position: fixed;
+}
+
+a.menu:hover {
+  color: #00e68a;
+}
+
+a#topp {
+  margin-right: 400px;
+}
+
+a#p_h {
+  margin-right: 270px;
+}
+
+a#skill {
+  margin-right: 188px;
+}
+
+a#end {
+  margin-right: 97px;
+}
+
+/*
+** Gradient background: https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient
+*/
+body {
+  background: linear-gradient(
+  to right, #00995c , #99ffd6, #00995c);
+  min-height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+header {
+  background: black;
+  color: white;
+  height: 50px;
+  position: fixed;
+  font-family: monospace, fantasy;
+  font-weight: 700;
+  text-align: center;
+  font-size: 42px;
+  vertical-align: middle;
+  left: 0;
+  top: 0;
+  padding: 10px;
+  width: 100%;
+  background-repeat: no-repeat;
+}
+
+footer#bottom {
+  background: black;
+  clear: both;
+  padding-top: 10px;
+  position: relative;
+  width: 103%;
+  height: 2.5em;
+  margin: -3em;
+}
+
+h1 {
+  font-family: monospace;
+  text-align: center;
+  margin-left: 65px;
+  width: 75%;
+}
+
+#email {
+  text-decoration: none;
+  margin-left: 450px;
+  font-family: monospace;
+  font-size: 24px;
+  color: white;
+}
+
+#github {
+  text-decoration: none;
+  margin-left: 550px;
+  font-family: monospace;
+  font-size: 24px;
+  color: white;
+}
+
+#email:hover {
+  text-decoration: underline;
+  color: #99ffd6;
+}
+
+#github:hover {
+  text-decoration: underline;
+  color: #99ffd6;
+}
+
+#me_lol {
+  float: right;
+  border-radius: 2px;
+}
