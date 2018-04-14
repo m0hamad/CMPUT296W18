@@ -16,7 +16,7 @@
     /*Source: https://codepen.io/P1N2O/pen/pyBNzX*/
     body {
       color: #fff;
-      background-image: linear-gradient(to right, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+      background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
 	    background-size: 400% 400%;
 	    -webkit-animation: Gradient 15s ease infinite;
 	    -moz-animation: Gradient 15s ease infinite;
@@ -68,6 +68,9 @@
       font-family: 'Courier New', Courier, monospace;
       border-radius: 2pt;
     }
+    a {
+      color: gold;
+    }
     footer {
       background: rgba(0, 0, 0, 0.40);
       color:whitesmoke;
@@ -118,17 +121,171 @@
     </style>
   </head>
   <body>
+    <h1>BlackJack [21]</h1>
     <div id="root">
     <script type="text/babel">{
       'use strict';
+
+      class Status_Session extends React.Component {
+        render() {
+          var status = this.props.status;
+          var session = this.props.session;
+          return(
+            <form>
+              <p>
+              <label>Status: </label>
+              <input
+                className="output"
+                name="status"
+                value={this.props.status}
+                onChange={this.changed}
+                readOnly
+              ></input>
+              <br/>
+              <label>Session: </label>
+              <input
+                className="output"
+                name="session"
+                value={this.props.session}
+                onChange={this.changed}
+                readOnly
+              ></input>
+              </p>
+            </form>
+          );
+        }
+      }
+
+      class Money_Bet extends React.Component {
+
+        constructor (props) {
+          super(props);
+        }
+
+        handleFocus(event) {
+          event.target.select();
+        }
+
+        betChange(event) {
+          var name = event.target.name;
+          var value = event.target.value;
+          this.props.onChange(name, value);
+        }
+
+        render() {
+          var money = this.props.money;
+          var bet = this.props.bet;
+          return(
+            <form>
+              <p>
+              <label>Money: </label>
+              <input
+                className="output"
+                name="money"
+                value={this.props.money}
+                onChange={this.props.changed}
+                readOnly
+              ></input>
+              <br/>
+              <label>Bet:</label>
+              <input
+                name="bet"
+                type="number"
+                value={this.props.bet}
+                onChange={this.betChange.bind(this)}
+                onFocus={this.handleFocus}
+              ></input>
+              <br/>
+              <button
+                type="button"
+                name="betButton"
+                >Place Bet</button>
+              </p>
+            </form>
+          );
+        }
+      }
+
+      class Game extends React.Component {
+        render() {
+          return (
+            <form>
+              <p>
+              <label>Dealer Cards: </label>
+              <input
+                className="output"
+                name="dealer_hand"
+                value={this.props.dealer_hand}
+                onChange={this.changed}
+                readOnly
+              ></input>
+              <br/>
+              <label>Your Cards: </label>
+              <input
+                className="output"
+                name="player_hand"
+                value={this.props.player_hand}
+                onChange={this.changed}
+                readOnly
+                ></input>
+              <br/>
+              <button
+                type="button"
+                name="stand"
+                >Stand</button>
+              <button
+                type="button"
+                name="hit"
+                >Hit</button>
+              <button
+                type="button"
+                name="double_down"
+                >Double Down</button>
+              <button
+                type="button"
+                name="surrender"
+                >Surrender</button>
+              <br/>
+              <label>Result: </label>
+              <input
+                className="output"
+                name="result"
+                value={this.props.result}
+                onChange={this.changed}
+                readOnly
+              ></input>
+              <br/>
+              <label>You bet: </label>
+              <input
+                className="output"
+                name="last_bet"
+                value={this.props.last_bet}
+                onChange={this.changed}
+                readOnly
+              ></input>
+              <br/>
+              <label>You made: </label>
+              <input
+                className="output"
+                name="won"
+                value={this.props.won}
+                onChange={this.changed}
+                readOnly
+              ></input>
+              <br/>
+              </p>
+            </form>
+          );
+        }
+      }
 
       class BlackJack extends React.Component {
           constructor(props){
               super(props);
               this.state = {
-                  status: "Loading...",
-                  session: "Loading...",
-                  money: "Loading...",
+                  status: "...",
+                  session: "...",
+                  money: "...",
                   bet: 0,
                   dealer_hand: "...",
                   player_hand: "...",
@@ -136,136 +293,30 @@
                   last_bet: "...",
                   won: "...",
               }
-              this.changed = this.changed.bind(this);
           }
 
-          handleFocus(event) {
-            event.target.select();
-          }
-
-          changed(event) {
-            var name = event.target.name;
-            var value = event.target.value;
-
-            if (name === 'bet') {
-              this.setState({
-                bet: value
-              })
-            }
+          onChange(field, value) {
+            this.setState({[field]: value});
           }
 
           render() {
             return(
-              <form className = "BlackJack">
-                <h1>BlackJack [21]</h1>
-                <p>
-                <label>Status: </label>
-                <input
-                  className="output"
-                  name="status"
-                  value={this.state.status}
-                  onChange={this.changed}
-                  readOnly
-                ></input>
-                <br/>
-                <label>Session: </label>
-                <input
-                  className="output"
-                  name="session"
-                  value={this.state.session}
-                  onChange={this.changed}
-                  readOnly
-                ></input>
-                </p>
-                <p>
-                <label>Money: </label>
-                <input
-                  className="output"
-                  name="money"
-                  value={this.state.money}
-                  onChange={this.changed}
-                  readOnly
-                ></input>
-                <br/>
-                <label>Bet:</label>
-                <input
-                  name="bet"
-                  type="number"
-                  value={this.state.bet}
-                  onChange={this.changed}
-                  onFocus={this.handleFocus}
-                ></input>
-                <br/>
-                <button
-                  type="button"
-                  name="betButton"
-                  >Place Bet</button>
-                </p>
-                <p>
-                <label>Dealer Cards: </label>
-                <input
-                  className="output"
-                  name="dealer_hand"
-                  value={this.state.dealer_hand}
-                  onChange={this.changed}
-                  readOnly
-                ></input>
-                <br/>
-                <label>Your Cards: </label>
-                <input
-                  className="output"
-                  name="player_hand"
-                  value={this.state.player_hand}
-                  onChange={this.changed}
-                  readOnly
-                  ></input>
-                <br/>
-                <button
-                  type="button"
-                  name="stand"
-                  >Stand</button>
-                <button
-                  type="button"
-                  name="hit"
-                  >Hit</button>
-                <button
-                  type="button"
-                  name="double_down"
-                  >Double Down</button>
-                <button
-                  type="button"
-                  name="surrender"
-                  >Surrender</button>
-                <br/>
-                <label>Result: </label>
-                <input
-                  className="output"
-                  name="result"
-                  value={this.state.result}
-                  onChange={this.changed}
-                  readOnly
-                ></input>
-                <br/>
-                <label>You bet: </label>
-                <input
-                  className="output"
-                  name="last_bet"
-                  value={this.state.last_bet}
-                  onChange={this.changed}
-                  readOnly
-                ></input>
-                <br/>
-                <label>You made: </label>
-                <input
-                  className="output"
-                  name="won"
-                  value={this.state.won}
-                  onChange={this.changed}
-                  readOnly
-                ></input>
-                <br/>
-                </p>
-              </form>
+              <div>
+                <Status_Session
+                  status = {this.state.status}
+                  session = {this.state.session}
+                  onChange={this.onChange.bind(this)}/>
+                <Money_Bet
+                  money = {this.state.money}
+                  bet = {this.state.bet}
+                  onChange={this.onChange.bind(this)}/>
+                <Game
+                  dealer_hand = {this.state.dealer_hand}
+                  player_hand = {this.state.player_hand}
+                  result = {this.state.result}
+                  last_bet = {this.state.last_bet}
+                  won = {this.state.won}/>
+              </div>
             );
           }
       }
