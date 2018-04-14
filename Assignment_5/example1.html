@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ohm's Law Calculator</title>
+    <meta charset="UTF-8"/>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone/babel.js"></script>
+    <style>
+        .OhmsLaw { border: 1px solid black; }
+    </style>
+  </head>
+  <body>
+    <!-- This is the canonical way to use react: the one root div -->
+    <div id="root"></div>
+    <script type="text/babel">{
+      'use strict';
+
+      class OhmsLaw extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            current: 0,
+            voltage: 0,
+            resistance: 1,
+            power: 0,
+          }
+          this.changed = this.changed.bind(this);
+        }
+        changed(event) {
+          var name = event.target.name;
+          var value = event.target.value;
+          console.log("Setting name " + name + " to value " + value);
+          this.setState({
+            [name]: value,
+          });
+          if (name === 'current') {
+            this.setState({
+              voltage: value * this.state.resistance,
+              power: (value * this.state.resistance) * value,
+            });
+          } else if (name === 'voltage') {
+            this.setState({
+              current: value / this.state.resistance,
+              power: (value / this.state.resistance) * value,
+            });
+          } else if (name === 'resistance') {
+            this.setState({
+              current: this.state.voltage / value,
+              power: (this.state.voltage / value) * this.state.voltage,
+            });
+          } else if (name === 'power') {
+            this.setState({
+              voltage: Math.sqrt(value * this.state.resistance),
+              current: Math.sqrt(value * this.state.resistance)/this.state.resistance,
+            });
+          }
+
+        }
+        render() {
+          return(
+            <form className="OhmsLaw">
+              <label>Current (amps)
+                <input
+                  type="number"
+                  name="current"
+                  onChange={this.changed}
+                  value={this.state.current}
+                ></input>
+              </label>
+              <br/>
+              <label>Voltage (volts)
+                <input
+                  type="number"
+                  name="voltage"
+                  onChange={this.changed}
+                  value={this.state.voltage}
+                ></input>
+              </label>
+              <br/>
+              <label>Resistance (ohms)
+                <input
+                  type="number"
+                  name="resistance"
+                  onChange={this.changed}
+                  value={this.state.resistance}
+                ></input>
+              </label>
+              <br/>
+              <label>Power (watts)
+                <input
+                  type="number"
+                  name="power"
+                  onChange={this.changed}
+                  value={this.state.power}
+                ></input>
+              </label>
+            </form>
+          );
+        }
+      }
+
+      ReactDOM.render(<main>
+        <h1>Ohms Law Calculator</h1>
+        <OhmsLaw/>
+      </main>, document.getElementById('root'));}
+    </script>
+    <footer>
+        Copyright Joshua "It's 1:48" Campbell
+    </footer>
+  </body>
+</html>

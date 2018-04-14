@@ -1,0 +1,298 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>BlackJack [21]</title>
+    <meta charset="UTF-8"/>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://unpkg.com/babel-standalone/babel.js"></script>
+    <style type="text/css" scoped>
+    h1 {
+      color: black;
+      text-align: center;
+      text-decoration: underline;
+      font-family: 'Courier New',Courier, monospace;
+    }
+    /*Source: https://codepen.io/P1N2O/pen/pyBNzX*/
+    body {
+      color: #fff;
+      background-image: linear-gradient(to right, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+	    background-size: 400% 400%;
+	    -webkit-animation: Gradient 15s ease infinite;
+	    -moz-animation: Gradient 15s ease infinite;
+	    animation: Gradient 15s ease infinite;
+    }
+    @-webkit-keyframes Gradient {
+    	0% {
+    		background-position: 0% 50%
+    	}
+    	50% {
+    		background-position: 100% 50%
+    	}
+    	100% {
+    		background-position: 0% 50%
+    	}
+    }
+
+    @-moz-keyframes Gradient {
+    	0% {
+    		background-position: 0% 50%
+    	}
+    	50% {
+    		background-position: 100% 50%
+    	}
+    	100% {
+    		background-position: 0% 50%
+    	}
+    }
+
+    @keyframes Gradient {
+    	0% {
+    		background-position: 0% 50%
+    	}
+    	50% {
+    		background-position: 100% 50%
+    	}
+    	100% {
+    		background-position: 0% 50%
+    	}
+    }
+
+    p {
+      background: rgba(0, 0, 0, 0.40);
+      text-align: center;
+      color: whitesmoke;
+      margin-left: 15%;
+      margin-right: 15%;
+      font-size:26px;
+      font-family: 'Courier New', Courier, monospace;
+      border-radius: 2pt;
+    }
+    footer {
+      background: rgba(0, 0, 0, 0.40);
+      color:whitesmoke;
+      text-align: center;
+      margin-left: 15%;
+      margin-right: 15%;
+      font-size: 26px;
+      font-family: 'Courier New', Courier,monospace;
+      border-radius: 2pt;
+    }
+    input {
+      background-color: gold;
+    }
+    button {
+      background-color: gold;
+      border: none;
+      color: black;
+      box-shadow: black;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size:16px;
+      font-family: 'Courier New', Courier, monospace;
+      border-radius: 5pt;
+      margin: 10pt;
+    }
+    textarea {
+      font-size:26px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    input.output {
+      outline: none;
+      border: none;
+      font-family: 'Courier New', Courier, monospace;
+      font-size:20px;
+      color: gold;
+      background: none;
+    }
+    ul {
+      background:rgba(0, 0, 0, 0.40);
+      color: whitesmoke;
+      margin-left: 15%;
+      margin-right: 15%;
+      font-size: 24px;
+      font-family: 'Courier New',Courier, monospace;
+      border-radius: 2pt; }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+    <script type="text/babel">{
+      'use strict';
+
+      class BlackJack extends React.Component {
+          constructor(props){
+              super(props);
+              this.state = {
+                  status: "Loading...",
+                  session: "Loading...",
+                  money: "Loading...",
+                  bet: 0,
+                  dealer_hand: "...",
+                  player_hand: "...",
+                  result: "...",
+                  last_bet: "...",
+                  won: "...",
+              }
+              this.changed = this.changed.bind(this);
+          }
+
+          handleFocus(event) {
+            event.target.select();
+          }
+
+          changed(event) {
+            var name = event.target.name;
+            var value = event.target.value;
+
+            if (name === 'bet') {
+              this.setState({
+                bet: value
+              })
+            }
+          }
+
+          render() {
+            return(
+              <form className = "BlackJack">
+                <h1>BlackJack [21]</h1>
+                <p>
+                <label>Status: </label>
+                <input
+                  className="output"
+                  name="status"
+                  value={this.state.status}
+                  onChange={this.changed}
+                  readOnly
+                ></input>
+                <br/>
+                <label>Session: </label>
+                <input
+                  className="output"
+                  name="session"
+                  value={this.state.session}
+                  onChange={this.changed}
+                  readOnly
+                ></input>
+                </p>
+                <p>
+                <label>Money: </label>
+                <input
+                  className="output"
+                  name="money"
+                  value={this.state.money}
+                  onChange={this.changed}
+                  readOnly
+                ></input>
+                <br/>
+                <label>Bet:</label>
+                <input
+                  name="bet"
+                  type="number"
+                  value={this.state.bet}
+                  onChange={this.changed}
+                  onFocus={this.handleFocus}
+                ></input>
+                <br/>
+                <button
+                  type="button"
+                  name="betButton"
+                  >Place Bet</button>
+                </p>
+                <p>
+                <label>Dealer Cards: </label>
+                <input
+                  className="output"
+                  name="dealer_hand"
+                  value={this.state.dealer_hand}
+                  onChange={this.changed}
+                  readOnly
+                ></input>
+                <br/>
+                <label>Your Cards: </label>
+                <input
+                  className="output"
+                  name="player_hand"
+                  value={this.state.player_hand}
+                  onChange={this.changed}
+                  readOnly
+                  ></input>
+                <br/>
+                <button
+                  type="button"
+                  name="stand"
+                  >Stand</button>
+                <button
+                  type="button"
+                  name="hit"
+                  >Hit</button>
+                <button
+                  type="button"
+                  name="double_down"
+                  >Double Down</button>
+                <button
+                  type="button"
+                  name="surrender"
+                  >Surrender</button>
+                <br/>
+                <label>Result: </label>
+                <input
+                  className="output"
+                  name="result"
+                  value={this.state.result}
+                  onChange={this.changed}
+                  readOnly
+                ></input>
+                <br/>
+                <label>You bet: </label>
+                <input
+                  className="output"
+                  name="last_bet"
+                  value={this.state.last_bet}
+                  onChange={this.changed}
+                  readOnly
+                ></input>
+                <br/>
+                <label>You made: </label>
+                <input
+                  className="output"
+                  name="won"
+                  value={this.state.won}
+                  onChange={this.changed}
+                  readOnly
+                ></input>
+                <br/>
+                </p>
+              </form>
+            );
+          }
+      }
+      ReactDOM.render(<main>
+        <BlackJack/>
+      </main>, document.getElementById('root'));}
+    </script>
+    </div>
+    <h1>Rules</h1>
+    <p id="rules">The full rules may be found on
+        <a href="https://en.wikipedia.org/wiki/Blackjack">Wikipedia</a> and elsewhere. The variant of blackjack used here:
+        <ul>
+            <li>Does not allow splitting.</li>
+            <li>The dealer hits on Soft 17.</li>
+            <li>Allows only late surrender.</li>
+        </ul>
+    </p>
+    <footer>
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+            <img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png"
+            />
+        </a>
+        <br />
+        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/InteractiveResource" property="dct:title"
+            rel="dct:type">Gambling Assignment for CMPUT 296</span> by
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">Mohamad Jamaleddine</span> is licensed under a
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+    </footer>
+  </body>
+</html>
